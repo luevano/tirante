@@ -20,30 +20,28 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
+
 import os
 
 # Project specific imports.
-from gcl import get_chapters_list
-from ch_man import chapters_list_to_csv
-from ch_man import chapters_csv_to_list
-from chim_man import chapter_image_list_to_csv
+from get_chapters_list import get_chapters_list
+from chapters_manager import chapters_csv_to_list
+from chapter_images_manager import chapter_images_list_to_csv
 
 
-def create_database(main_url,
+def update_database(main_url,
                     manga_name_url,
                     manga_name,
                     manga_dir,
                     manga_data_dir):
     """
-    Creates a database from zero, made of csv files.
+    Updates the database already created, adding missing ones.
     main_url: Main webpage name (source).
     manga_name_url: Name of the manga in the url format
     that's used by the webpage.
     manga_name: Actual name of the manga, as it appears in the webpage.
     manga_dir: Main manga folder in computer, subfolders here will be created.
     manga_data_dir: Main manga data folder in computer.
-    NOTE: This does not updates the database.
-    If a database already exists, omits the creation of new files.
     """
 
     # A better "naming" for the manga, for use with folder creation.
@@ -62,26 +60,42 @@ def create_database(main_url,
                        ' folder already exists.']))
         os.chdir(m_name)
 
-    # List of files and folders in the current path.
+    # Get a list of files present in path.
     data_list_dir = os.listdir()
 
-    # Get the list of chapters, if this already exists,
-    # read it from the database.
-    # This is the main manga data.
-    if m_name_ext not in data_list_dir:
-        chapters_list = get_chapters_list(main_url=main_url,
-                                          manga_name_url=manga_name_url,
-                                          manga_name=manga_name)
-        chapters_list_to_csv(chapters_list=chapters_list, manga_name=m_name)
-    else:
-        print(''.join([m_name_ext, ' already exists.']))
-        chapters_list = chapters_csv_to_list(m_name_ext)
+    # First, download the data from the web.
+    new_chapter_list = get_chapters_list(main_url=main_url,
+                                         manga_name_url=manga_name_url,
+                                         manga_name=manga_name,
+                                         reverse_sorted=False)
 
-    # Data for each chapter.
-    for chapter in chapters_list:
+    # And then, read the current database.
+    last_chapter = chapters_csv_to_list(m_name_ext)[-1]
+
+    # The missing chapters.
+    missing_chapters = []
+    for chapter in new_chapter_list:
+        # If we get to the last acquired chapter, exit loop.
+        if chapter == last_chapter:
+            break
+        missing_chapters.append(chapter)
+
+    # Reverse the order.
+    missing_chapters = missing_chapters[::-1]
+
+    # Write the last chapters to already existing csv file.
+    # No need for checking if items are present,
+    # since that's checked on the last steps,
+    # that's how missing_chapters is acquired.
+    with open(m_name_ext, 'a') as outcsv:
+        for chapter in missing_chapters:
+            outcsv.write(''.join([chapter[0], ',', chapter[1], '\n']))
+
+    # Create the missing csv data files for each chapter.
+    for chapter in missing_chapters:
         # Get the list for the images of each chapter.
         chapter_name_ext = ''.join([chapter[1], '.csv'])
         if chapter_name_ext not in data_list_dir:
-            chapter_image_list_to_csv(chapter)
+            chapter_images_list_to_csv(chapter)
         else:
             print(''.join([chapter_name_ext, ' already exists.']))

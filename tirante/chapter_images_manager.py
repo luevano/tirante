@@ -20,10 +20,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
-from gcil import get_chapter_image_list
+from get_chapter_image_list import get_chapter_image_list
 
 
-def chapter_image_list_to_csv(chapter_data):
+def chapter_images_list_to_csv(chapter_data):
     """
     Creates csv file for a chapter, given the list.
     chapter_data: A list containing a url and a title.
@@ -38,7 +38,7 @@ def chapter_image_list_to_csv(chapter_data):
             outcsv.write(''.join([image[0], ',', image[1], '\n']))
 
 
-def chapter_image_csv_to_list(chapter_image_csv):
+def chapter_images_csv_to_list(chapter_image_csv):
     """
     Returns a list given the csv file.
     chapter_image_csv: csv containing data for the chapter.
