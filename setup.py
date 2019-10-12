@@ -44,9 +44,9 @@ VERSION = __version__
 # VERSION = '0.0.1'
 
 # What packages are required for this module to be executed?
-REQUIRED = [
-    # 'requests', 'maya', 'records',
-]
+REQUIRED = ['beautifulsoup4',
+            'requests',
+            'urllib3']
 
 # What packages are optional?
 EXTRAS = {
