@@ -24,9 +24,9 @@ SOFTWARE.
 import os
 
 # Project specific imports.
-from .gcl import get_chapters_list
-from .ch_man import chapters_csv_to_list
-from .chim_man import chapter_image_list_to_csv
+from gcl import get_chapters_list
+from ch_man import chapters_csv_to_list
+from chim_man import chapter_image_list_to_csv
 
 
 def update_database(main_url,

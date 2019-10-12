@@ -20,13 +20,13 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
-from .version import __version__
-from .cr_dat import create_database
-from .up_dat import update_database
-from .down_man import download_manga
+from version import __version__
+from cr_dat import create_database
+from up_dat import update_database
+from down_man import download_manga
 
 # If somebody does "from package import *", this is what they will
 # be able to access:
-__all__ = [create_database,
-           update_database,
-           download_manga]
+__all__ = ['create_database',
+           'update_database',
+           'download_manga']

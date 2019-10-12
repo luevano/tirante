@@ -23,9 +23,9 @@ SOFTWARE.
 import os
 
 # Project specific imports.
-from .ch_man import chapters_csv_to_list
-from .chim_man import chapter_image_csv_to_list
-from .do_man import download_chapter
+from ch_man import chapters_csv_to_list
+from chim_man import chapter_image_csv_to_list
+from do_man import download_chapter
 
 
 def download_manga(manga_name,
