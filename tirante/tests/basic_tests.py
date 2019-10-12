@@ -20,7 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
-import tirante
+from tirante import create_database
 
 # Main manga source.
 MAIN_URL = 'https://manganelo.com/manga/'
@@ -35,9 +35,9 @@ MANGA_DIR = 'E:\\Mangas\\'
 MANGA_DATA_DIR = ''.join(['C:\\Users\\Lorentzeus\\Google Drive\\',
                           'Personal\\Python\\tirante\\test_data'])
 
-tirante.create_database(main_url=MAIN_URL,
-                        manga_name_url=MANGA_NAME_URL,
-                        manga_name=MANGA_NAME)
+create_database(main_url=MAIN_URL,
+                manga_name_url=MANGA_NAME_URL,
+                manga_name=MANGA_NAME)
 # update_database()
 # download_manga()
 

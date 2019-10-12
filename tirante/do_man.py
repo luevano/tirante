@@ -20,13 +20,31 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
-from .version import __version__
-from .cr_dat import create_database
-from .up_dat import update_database
-from .down_man import download_manga
+import requests
 
-# If somebody does "from package import *", this is what they will
-# be able to access:
-__all__ = [create_database,
-           update_database,
-           download_manga]
+
+def download_image(image_list):
+    """
+    Downloads an image from the specified url,
+    and saves it with the specified name.
+    image_list: list that contains url and name.
+    """
+
+    # Gets the content of an image rom its url.
+    img_data = requests.get(image_list[0]).content
+
+    # Opens a file with its corresponding name as 'wb' (write, binary),
+    # and then, writes the img_data.
+    with open(image_list[1], 'wb') as handler:
+        handler.write(img_data)
+
+
+def download_chapter(image_list):
+    """
+    Downloads the whole chapter as images.
+    image_url_list: List containing urls and file names for each image.
+    """
+
+    for image in image_list:
+        print(image)
+        download_image(image)
