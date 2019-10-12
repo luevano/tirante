@@ -20,13 +20,4 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
-from .version import __version__
-from .tirante import create_database
-from .tirante import update_database
-from .tirante import download_manga
-
-# If somebody does "from package import *", this is what they will
-# be able to access:
-__all__ = [create_database,
-           update_database,
-           download_manga]
+__version__ = '0.0.1'
