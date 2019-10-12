@@ -20,13 +20,36 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
-from .version import __version__
-from .cr_dat import create_database
-from .up_dat import update_database
-from .down_man import download_manga
 
-# If somebody does "from package import *", this is what they will
-# be able to access:
-__all__ = [create_database,
-           update_database,
-           download_manga]
+
+def chapters_list_to_csv(chapters_list,
+                         manga_name):
+    """
+    Creates a csv file from the input chapter_list.
+    chapters_list: List of data of the chapters.
+    manga_name: Name of the manga, folder naming friendly.
+    """
+
+    # Adding '.csv' for csv creation.
+    m_name_ext = ''.join([manga_name, '.csv'])
+    # print(m_name)
+
+    with open(m_name_ext, 'w') as outcsv:
+        for chapter in chapters_list:
+            outcsv.write(''.join([chapter[0], ',', chapter[1], '\n']))
+
+
+def chapters_csv_to_list(chapter_csv):
+    """
+    Gives a list of chaptesrs from a csv file.
+    chapters_list: List of data of the chapters.
+    """
+
+    out_chapters_list = []
+
+    with open(chapter_csv, 'r') as incsv:
+        lines = incsv.readlines()
+        for line in lines:
+            out_chapters_list.append(line.strip().split(','))
+
+    return out_chapters_list
