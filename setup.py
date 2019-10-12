@@ -31,7 +31,7 @@ import os
 
 from setuptools import find_packages, setup
 
-from tirante.__version__ import __version__
+# from tirante.version import __version__
 
 # Package meta-data.
 NAME = 'tirante'
@@ -39,8 +39,9 @@ DESCRIPTION = 'A (wannabe) manga downloader manager.'
 URL = 'https://github.com/luevano/tirante'
 EMAIL = 'lorentzeus@gmail.com'
 AUTHOR = 'David Luevano Alvarado'
-REQUIRES_PYTHON = '>=3.7.4'
-VERSION = __version__
+REQUIRES_PYTHON = '>=3.7'
+# VERSION = __version__
+VERSION = '0.0.1'
 
 # What packages are required for this module to be executed?
 REQUIRED = [
