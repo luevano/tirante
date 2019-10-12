@@ -20,7 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
-from create_database import create_database
+from tirante.create_database import create_database
 
 # Main manga source.
 MAIN_URL = 'https://manganelo.com/manga/'

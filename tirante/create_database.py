@@ -23,10 +23,10 @@ SOFTWARE.
 import os
 
 # Project specific imports.
-from get_chapters_list import get_chapters_list
-from chapters_manager import chapters_list_to_csv
-from chapters_manager import chapters_csv_to_list
-from chapter_images_manager import chapter_images_list_to_csv
+from tirante.get_chapters_list import get_chapters_list
+from tirante.chapters_manager import chapters_list_to_csv
+from tirante.chapters_manager import chapters_csv_to_list
+from tirante.chapter_images_manager import chapter_images_list_to_csv
 
 
 def create_database(main_url,

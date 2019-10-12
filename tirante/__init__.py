@@ -21,9 +21,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 # from version import __version__
-from create_database import create_database
-from update_database import update_database
-from download_manga import download_manga
+from tirante.create_database import create_database
+from tirante.update_database import update_database
+from tirante.download_manga import download_manga
 
 # If somebody does "from package import *", this is what they will
 # be able to access:

@@ -23,9 +23,9 @@ SOFTWARE.
 import os
 
 # Project specific imports.
-from chapters_manager import chapters_csv_to_list
-from chapter_images_manager import chapter_image_csv_to_list
-from download_manager import download_chapter
+from tirante.chapters_manager import chapters_csv_to_list
+from tirante.chapter_images_manager import chapter_images_csv_to_list
+from tirante.download_manager import download_chapter
 
 
 def download_manga(manga_name,
@@ -98,7 +98,7 @@ def download_manga(manga_name,
             # Go to where the database is located.
             os.chdir(manga_data_dir)
             os.chdir(m_name)
-            chapter_image_list = chapter_image_csv_to_list(ch_name_ext)
+            chapter_image_list = chapter_images_csv_to_list(ch_name_ext)
 
             # Go back to where the manga is going ot be downloaded.
             os.chdir(manga_dir)
