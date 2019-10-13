@@ -103,10 +103,14 @@ venv.bak/
 # mypy
 .mypy_cache/
 
+#
+#
+# PERSONAL IGNORES.
+#
+#
+
 # vscode
-.vscode
 .vscode/
 
 # Project specific
 test_data/
-test_data
