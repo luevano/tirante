@@ -30,7 +30,7 @@ def download_image(image_list):
     image_list: list that contains url and name.
     """
 
-    # Gets the content of an image rom its url.
+    # Gets the content of an image from its url.
     img_data = requests.get(image_list[0]).content
 
     # Opens a file with its corresponding name as 'wb' (write, binary),
