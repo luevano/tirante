@@ -53,6 +53,7 @@ def create_database(main_url,
 
     # Navigate to where the main data folder is,
     # then to where the manga folder is.
+    init_folder = os.getcwd()
     os.chdir(manga_data_dir)
     try:
         os.mkdir(m_name)
@@ -85,3 +86,4 @@ def create_database(main_url,
             chapter_images_list_to_csv(chapter)
         else:
             print(''.join([chapter_name_ext, ' already exists.']))
+        os.chdir(init_folder)
