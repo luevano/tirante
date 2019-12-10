@@ -32,8 +32,7 @@ MANGA_NAME_URL = 'kimetsu_no_yaiba/'
 # PC main file location.
 MANGA_DIR = 'E:\\Mangas\\'
 # PC main manga data location.
-MANGA_DATA_DIR = ''.join(['C:\\Users\\Lorentzeus\\Google Drive\\',
-                          'Personal\\Python\\tirante\\test_data'])
+MANGA_DATA_DIR = '../test_data'
 
 if __name__ == "__main__":
     create_database(main_url=MAIN_URL,
