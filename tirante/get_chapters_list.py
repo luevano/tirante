@@ -20,68 +20,52 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
-import urllib3
+import requests
 from bs4 import BeautifulSoup
+import re
 
 
-def get_chapters_list(main_url,
-                      manga_name_url,
+def get_chapters_list(manga_url,
                       manga_name,
-                      reverse_sorted=True):
+                      sort_list=True):
     """
     Retrieves chapter urls and names. Returns a list of lists
     containing the url and the title of the chapter.
-    main_url: Main webpage name (source).
-    manga_name_url: Name of the manga in the url format
-    that's used by the webpage.
-    manga_name: Actual name of the manga, as it appears in the webpage.
-    reverse_sorted: Sorting of the final array.
+    manga_url: url of the manga.
+    manga_name: actual name of the manga, as it appears in the webpage.
+    sort_list: sorting of the final array.
     """
-
-    manga_url = ''.join([main_url, manga_name_url])
-
-    # Not actually a file, but the content of the html.
-    html = urllib3.PoolManager().request('GET', manga_url)
-
     # Get the data from the html and parse it.
-    soup = BeautifulSoup(html.data, 'html.parser')
+    page = requests.get(manga_url)
+    soup = BeautifulSoup(page.content, 'html.parser')
 
     # Get the "rows" class, this contains the url
     # and title data for each chapter.
-    # Deletes the first tag, since it's not useful.
-    soup_rows = soup.find_all('div', {'class': 'row'})
-    del soup_rows[0]
+    soup_rows = soup.find_all('a', {'class': 'chapter-name'})
 
-    # Creates a list to store date for each url and chapter name.
+    # Creates a list to store data for each url and chapter name.
     chapter_list = []
 
     for row in soup_rows:
 
-        # Gets the url name from the a tag.
-        href = row.a['href']
+        # Gets the url name from the 'a' tag.
+        href = row['href']
         # Same, for the title. Deletes every ocurrance of the manga name,
         # unwanted characters and then gets everyword.
-        title_words = row.a['title'].replace(manga_name, '').replace('?', '')
-        title_words = title_words.replace(':', '').replace('-', '')
-        title_words = title_words.replace('...', '').replace(',', '').split()
+        title = re.sub('Vol.\d ', '', row['title'])
+        title = re.sub('Vol.\d\d ', '', row['title'])
+        title = '_'.join(title.replace(manga_name, '').replace('?', '')
+                         .replace(':', '').replace('-', '').replace('...', '')
+                         .replace(',', '').lower().split())
 
-        # Doing all the work in oneliner doesn't work for some chapters,
-        # for some reason.
-        # title = '_'.join(row.a['title'].replace(manga_name, '')
-        # .replace(':', '').replace('-', '').lower().split())
-
-        # Lowers every word and appends it to a new list,
-        # then it gets joined with '_' as a sep.
-        title_words_lower = []
-        for word in title_words:
-            title_words_lower.append(word.lower())
-
-        title = '_'.join(title_words_lower)
-
-        # print(href, title)
+        print(href, title)
         chapter_list.append([href, title])
 
-    if reverse_sorted:
+    if sort_list:
         return chapter_list[::-1]
     else:
         return chapter_list
+
+
+get_chapters_list('https://manganelo.com/manga/kimetsu_no_yaiba/',
+                  'Kimetsu no Yaiba')
