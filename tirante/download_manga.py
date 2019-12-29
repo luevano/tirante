@@ -21,25 +21,21 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 import os
-
-# Project specific imports.
-from tirante.chapters_manager import chapters_csv_to_list
-from tirante.chapter_images_manager import chapter_images_csv_to_list
+from tirante.csv_manager import chapter_csv_to_list, image_csv_to_list
 from tirante.download_manager import download_chapter
 
 
 def download_manga(manga_name,
                    manga_dir,
-                   manga_data_dir):
+                   database_dir):
     """
     Downloads a whole manga, saving it to subfolders.
-    Uses the database already created.
-    that's used by the webpage.
-    manga_name: Actual name of the manga, as it appears in the webpage.
-    manga_dir: Main manga folder in computer, subfolders here will be created.
-    manga_data_dir: Main manga data folder in computer.
+        Uses the database already created.
+    manga_name: name of the manga.
+    manga_dir: manga download directory.
+    database_dir: directory where the database is stored.
     NOTE: This updates the manga, downloading the missing chapters
-    if they're listed in the database.
+        if they're listed in the database.
     """
 
     # A better "naming" for the manga, for use with folder creation.
@@ -47,15 +43,17 @@ def download_manga(manga_name,
     m_name = '_'.join(word.lower() for word in manga_name.split())
     m_name_ext = ''.join([m_name, '.csv'])
 
-    # Go to where the database is located.
-    os.chdir(manga_data_dir)
+    # Navigate to database directory and create a new folder for the manga.
+    init_folder = os.getcwd()
+    os.chdir(database_dir)
+    complete_db_dir = os.getcwd()
     try:
         os.chdir(m_name)
     except FileNotFoundError:
         print(''.join([m_name,
                        ' folder doesn\'t exist.',
                        ' Most likely, the database hasn\'t been created.']))
-        raise NameError('Create database first.')
+        raise
 
     # Get info of the files in the database.
     data_list_dir = os.listdir()
@@ -63,11 +61,10 @@ def download_manga(manga_name,
     # Reads data from the main database.
     if m_name_ext not in data_list_dir:
         print(''.join([m_name,
-                       ' database hasn\'t been created.',
-                       ' Most likely, the database hasn\'t been created.']))
-        raise NameError('Create database first.')
+                       ' database hasn\'t been created.']))
+        raise FileNotFoundError(''.join([m_name, ' does not exist.']))
     else:
-        chapters_list = chapters_csv_to_list(m_name_ext)
+        chapters_list = chapter_csv_to_list(m_name_ext)
 
     # Navigate to the main manga dir,
     # and either create or go to manga folder.
@@ -88,17 +85,15 @@ def download_manga(manga_name,
         chapter_name = chapter[1]
         ch_name_ext = ''.join([chapter_name, '.csv'])
 
-        if chapter_name not in manga_list_dir:
-            print(''.join(['Downloading ',
-                           chapter_name,
-                           ' now.']))
+        if (chapter_name or ch_name_ext) not in manga_list_dir:
+            print(''.join(['Downloading ', chapter_name, ' now.']))
             # First, create the chapter folder.
             os.mkdir(chapter_name)
 
             # Go to where the database is located.
-            os.chdir(manga_data_dir)
+            os.chdir(complete_db_dir)
             os.chdir(m_name)
-            chapter_image_list = chapter_images_csv_to_list(ch_name_ext)
+            chapter_image_list = image_csv_to_list(ch_name_ext)
 
             # Go back to where the manga is going ot be downloaded.
             os.chdir(manga_dir)
@@ -114,3 +109,4 @@ def download_manga(manga_name,
         else:
             print(''.join([chapter_name,
                            ' already downloaded.']))
+    os.chdir(init_folder)
