@@ -51,6 +51,7 @@ def create_database(manga_url,
         print(''.join([m_name,
                        ' folder already exists. If you\'re trying to update,',
                        ' please use the update_database function instead.']))
+        return None
         os.chdir(m_name)
 
     # List of files and folders in the current path.

@@ -50,6 +50,9 @@ def get_chapters_list(manga_url,
     manga_name: actual name of the manga, as it appears in the webpage.
     sort_list: sorting of the final array.
     """
+    # Lowers the manga name string characters.
+    manga_name = manga_name.lower()
+
     # Get the data from the html and parse it.
     page = requests.get(manga_url)
     soup = BeautifulSoup(page.content, 'html.parser')
@@ -67,11 +70,12 @@ def get_chapters_list(manga_url,
         href = row['href']
         # Same, for the title. Deletes every ocurrance of the manga name,
         # unwanted characters and then gets everyword.
-        title = re.sub('Vol.\d ', '', row['title'])
-        title = re.sub('Vol.\d\d ', '', row['title'])
+        title = row['title'].lower()
+        title = re.sub('vol.\d ', '', title)
+        title = re.sub('vol.\d\d ', '', title)
         title = del_multiple_chars(title, '?:-,\'').replace('...', '')
-        title = title.replace(manga_name, '').replace('Chapter ', '')
-        title = '_'.join(title.lower().split())
+        title = title.replace(manga_name, '').replace('chapter', '')
+        title = '_'.join(title.split())
 
         chapter_list.append([href, title])
 
