@@ -55,16 +55,14 @@ def chapters_csv_to_list(chapter_csv):
 
 
 def images_list_to_csv(images_list,
-                       chapter_name):
+                       chapter_name_ext):
     """
     Creates csv file for a chapter from just scrapped data.
     images_list: list of data of images from a chapter.
-    chapter_name: name of the chapter, file naming friendly.
+    chapter_name_ext: name of the chapter with file extension included.
     """
 
-    ch_name = ''.join([chapter_name, '.csv'])
-
-    with open(ch_name, 'w') as outcsv:
+    with open(chapter_name_ext, 'w') as outcsv:
         for image in images_list:
             outcsv.write(''.join([image[0], ',', image[1], '\n']))
 
