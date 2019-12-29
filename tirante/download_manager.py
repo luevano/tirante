@@ -43,12 +43,10 @@ def download_image(image,
         return img_data
 
 
-def download_chapter(image_list,
-                     chapter_name=None):
+def download_chapter(image_list):
     """
     Downloads the whole chapter as images.
     image_list: list containing urls and file name for each image.
-    chapter_name: name of the chapter.
     """
     for image in image_list:
         print(image)

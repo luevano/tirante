@@ -20,3 +20,17 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
+import os
+
+
+def zip_chapter(chapter_name,
+                image_list,
+                manga_dir):
+    """
+    Zips a chapter into the desired extension.
+    chapter_name: name of the chapter.
+    manga_dir: manga download directory.
+    """
+
+    # Initial working directory
+    init_dir = os.getcwd()
