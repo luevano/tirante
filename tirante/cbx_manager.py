@@ -29,6 +29,7 @@ def zip_chapter(chapter_name,
     """
     Zips a chapter into the desired extension.
     chapter_name: name of the chapter.
+    image_list: list of data of images from a chapter.
     manga_dir: manga download directory.
     """
 

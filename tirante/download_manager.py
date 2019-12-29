@@ -43,11 +43,14 @@ def download_image(image,
         return img_data
 
 
-def download_chapter(image_list):
+def download_chapter(image_list,
+                     extra_status_msgs=False):
     """
     Downloads the whole chapter as images.
     image_list: list containing urls and file name for each image.
+    extra_status_msgs: if each image status should be printed.
     """
     for image in image_list:
-        print(image)
+        if extra_status_msgs:
+            print(image)
         download_image(image)
