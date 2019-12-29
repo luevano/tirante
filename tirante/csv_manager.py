@@ -20,27 +20,58 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
-from tirante.get_chapter_image_list import get_chapter_image_list
 
 
-def chapter_images_list_to_csv(chapter_data):
+def chapters_list_to_csv(chapters_list,
+                         manga_name):
     """
-    Creates csv file for a chapter, given the list.
-    chapter_data: A list containing a url and a title.
+    Creates a csv file from a list of just scrapped data.
+    chapters_list: list of data of the chapters.
+    manga_name: name of the manga, file naming friendly.
     """
 
-    ch_name = ''.join([chapter_data[1], '.csv'])
+    # Adding '.csv' for csv creation.
+    m_name_ext = ''.join([manga_name, '.csv'])
 
-    chapter_image_list = get_chapter_image_list(chapter_data)
+    with open(m_name_ext, 'w') as outcsv:
+        for chapter in chapters_list:
+            outcsv.write(''.join([chapter[0], ',', chapter[1], '\n']))
+
+
+def chapters_csv_to_list(chapter_csv):
+    """
+    Gives a list of chaptesrs from a csv file.
+    chapters_list: List of data of the chapters.
+    """
+
+    out_chapters_list = []
+
+    with open(chapter_csv, 'r') as incsv:
+        lines = incsv.readlines()
+        for line in lines:
+            out_chapters_list.append(line.strip().split(','))
+
+    return out_chapters_list
+
+
+def images_list_to_csv(images_list,
+                       chapter_name):
+    """
+    Creates csv file for a chapter from just scrapped data.
+    images_list: list of data of images from a chapter.
+    chapter_name: name of the chapter, file naming friendly.
+    """
+
+    ch_name = ''.join([chapter_name, '.csv'])
 
     with open(ch_name, 'w') as outcsv:
-        for image in chapter_image_list:
+        for image in images_list:
             outcsv.write(''.join([image[0], ',', image[1], '\n']))
 
 
-def chapter_images_csv_to_list(chapter_image_csv):
+def images_csv_to_list(chapter_image_csv):
     """
-    Returns a list given the csv file.
+    Returns a list of chapter images from a csv file.
     chapter_image_csv: csv containing data for the chapter.
     """
 
@@ -49,7 +80,6 @@ def chapter_images_csv_to_list(chapter_image_csv):
     with open(chapter_image_csv, 'r') as incsv:
         lines = incsv.readlines()
         for line in lines:
-            # print(line.strip().split(','))
             out_chapter_image_list.append(line.strip().split(','))
 
     return out_chapter_image_list
