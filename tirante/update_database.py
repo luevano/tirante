@@ -23,23 +23,17 @@ SOFTWARE.
 
 import os
 from tirante.web_scrapping import get_chapter_list, get_chapter_image_list
-from tirante.chapters_manager import chapters_csv_to_list
-from tirante.chapter_images_manager import chapter_images_list_to_csv
+from tirante.csv_manager import chapter_csv_to_list, image_list_to_csv
 
 
-def update_database(main_url,
-                    manga_name_url,
+def update_database(manga_url,
                     manga_name,
-                    manga_dir,
-                    manga_data_dir):
+                    database_dir):
     """
-    Updates the database already created, adding missing ones.
-    main_url: Main webpage name (source).
-    manga_name_url: Name of the manga in the url format
-    that's used by the webpage.
-    manga_name: Actual name of the manga, as it appears in the webpage.
-    manga_dir: Main manga folder in computer, subfolders here will be created.
-    manga_data_dir: Main manga data folder in computer.
+    Updates the database already created, adding missing elements.
+    manga_url: url of the manga.
+    manga_name: name of the manga.
+    database_dir: directory where the database will be created.
     """
 
     # A better "naming" for the manga, for use with folder creation.
@@ -47,29 +41,24 @@ def update_database(main_url,
     m_name = '_'.join(word.lower() for word in manga_name.split())
     m_name_ext = ''.join([m_name, '.csv'])
 
-    # Navigate to where the main data folder is,
-    # then to where the manga folder is.
+    # Navigate to database directory and create a new folder for the manga.
     init_folder = os.getcwd()
-    os.chdir(manga_data_dir)
+    os.chdir(database_dir)
     try:
-        os.mkdir(m_name)
         os.chdir(m_name)
-    except FileExistsError:
+    except FileNotFoundError:
         print(''.join([m_name,
-                       ' folder already exists.']))
-        os.chdir(m_name)
-
-    # Get a list of files present in path.
-    data_list_dir = os.listdir()
+                       ' folder doesn\'t exist.',
+                       ' If you\'re trying to create the database for the',
+                       ' first time, please use the create_database',
+                       ' function instead.']))
+        raise
 
     # First, download the data from the web.
-    new_chapter_list = get_chapter_list(main_url=main_url,
-                                        manga_name_url=manga_name_url,
-                                        manga_name=manga_name,
-                                        reverse_sorted=False)
+    new_chapter_list = get_chapter_list(manga_url, manga_name, False)
 
     # And then, read the current database.
-    last_chapter = chapters_csv_to_list(m_name_ext)[-1]
+    last_chapter = chapter_csv_to_list(m_name_ext)[-1]
 
     # The missing chapters.
     missing_chapters = []
@@ -78,6 +67,10 @@ def update_database(main_url,
         if chapter == last_chapter:
             break
         missing_chapters.append(chapter)
+
+    if not missing_chapters:
+        print('Database already up to date.')
+        return None
 
     # Reverse the order.
     missing_chapters = missing_chapters[::-1]
@@ -94,8 +87,6 @@ def update_database(main_url,
     for chapter in missing_chapters:
         # Get the list for the images of each chapter.
         chapter_name_ext = ''.join([chapter[1], '.csv'])
-        if chapter_name_ext not in data_list_dir:
-            chapter_images_list_to_csv(chapter)
-        else:
-            print(''.join([chapter_name_ext, ' already exists.']))
+        images_list = get_chapter_image_list(chapter)
+        image_list_to_csv(images_list, chapter_name_ext)
     os.chdir(init_folder)

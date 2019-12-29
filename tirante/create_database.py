@@ -42,17 +42,18 @@ def create_database(manga_url,
     m_name = '_'.join(word.lower() for word in manga_name.split())
     m_name_ext = ''.join([m_name, '.csv'])
 
-    # Create the database folder and navigate to it.
+    # Navigate to database directory and create a new folder for the manga.
+    init_folder = os.getcwd()
     os.chdir(database_dir)
     try:
         os.mkdir(m_name)
         os.chdir(m_name)
     except FileExistsError:
         print(''.join([m_name,
-                       ' folder already exists. If you\'re trying to update,',
+                       ' folder already exists.',
+                       ' If you\'re trying to update,',
                        ' please use the update_database function instead.']))
-        return None
-        os.chdir(m_name)
+        raise
 
     # List of files and folders in the current path.
     data_list_dir = os.listdir()
@@ -65,20 +66,24 @@ def create_database(manga_url,
         chapter_list_to_csv(chapters_list, m_name)
     else:
         print(''.join([m_name_ext,
-                       ' already exists. If you\'re trying to update,',
+                       ' already exists.'
+                       ' If you\'re trying to update,',
                        ' please use the update_database function instead.']))
-        return None
+        raise FileExistsError(''.join([m_name_ext,
+                                       ' already exists.']))
 
     # Data for each chapter.
-    for chapter_data in chapters_list:
+    for chapter in chapters_list:
         # Get the list for the images of each chapter.
-        chapter_name_ext = ''.join([chapter_data[1], '.csv'])
+        chapter_name_ext = ''.join([chapter[1], '.csv'])
         if chapter_name_ext not in data_list_dir:
-            images_list = get_chapter_image_list(chapter_data)
+            images_list = get_chapter_image_list(chapter)
             image_list_to_csv(images_list, chapter_name_ext)
         else:
             print(''.join([chapter_name_ext,
                            ' already exists.',
                            ' If you\'re trying to update, please use',
                            ' the update_database function instead.']))
-            return None
+            raise FileExistsError(''.join([chapter_name_ext,
+                                           ' already exists.']))
+    os.chdir(init_folder)

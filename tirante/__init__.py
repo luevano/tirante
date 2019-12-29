@@ -22,7 +22,7 @@ SOFTWARE.
 """
 from tirante.version import __version__
 from tirante.create_database import create_database
-# from tirante.update_database import update_database
+from tirante.update_database import update_database
 # from tirante.download_manga import download_manga
 
 # If somebody does "from package import *", this is what they will

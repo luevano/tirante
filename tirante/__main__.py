@@ -20,7 +20,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
-from tirante.create_database import create_database
+# from tirante.create_database import create_database
+from tirante.update_database import update_database
 
 MANGA_URL = 'https://manganelo.com/manga/kimetsu_no_yaiba/'
 MANGA_NAME = 'Kimetsu no Yaiba'
@@ -31,6 +32,6 @@ MANGA_DIR = 'E:\\Mangas\\'
 DATABASE_DIR = 'test_data'
 
 if __name__ == "__main__":
-    create_database(manga_url=MANGA_URL,
+    update_database(manga_url=MANGA_URL,
                     manga_name=MANGA_NAME,
                     database_dir=DATABASE_DIR)
