@@ -21,8 +21,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 import os
-from tirante.web_scrapping import get_chapters_list, get_chapter_image_list
-from tirante.csv_manager import chapters_list_to_csv, images_list_to_csv
+from tirante.web_scrapping import get_chapter_list, get_chapter_image_list
+from tirante.csv_manager import chapter_list_to_csv, image_list_to_csv
 
 
 def create_database(manga_url,
@@ -61,8 +61,8 @@ def create_database(manga_url,
     # read it from the database.
     # This is the main manga data.
     if m_name_ext not in data_list_dir:
-        chapters_list = get_chapters_list(manga_url, manga_name)
-        chapters_list_to_csv(chapters_list, m_name)
+        chapters_list = get_chapter_list(manga_url, manga_name)
+        chapter_list_to_csv(chapters_list, m_name)
     else:
         print(''.join([m_name_ext,
                        ' already exists. If you\'re trying to update,',
@@ -75,7 +75,7 @@ def create_database(manga_url,
         chapter_name_ext = ''.join([chapter_data[1], '.csv'])
         if chapter_name_ext not in data_list_dir:
             images_list = get_chapter_image_list(chapter_data)
-            images_list_to_csv(images_list, chapter_name_ext)
+            image_list_to_csv(images_list, chapter_name_ext)
         else:
             print(''.join([chapter_name_ext,
                            ' already exists.',

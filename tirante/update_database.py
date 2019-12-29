@@ -22,9 +22,7 @@ SOFTWARE.
 """
 
 import os
-
-# Project specific imports.
-from tirante.get_chapters_list import get_chapters_list
+from tirante.web_scrapping import get_chapter_list, get_chapter_image_list
 from tirante.chapters_manager import chapters_csv_to_list
 from tirante.chapter_images_manager import chapter_images_list_to_csv
 
@@ -65,10 +63,10 @@ def update_database(main_url,
     data_list_dir = os.listdir()
 
     # First, download the data from the web.
-    new_chapter_list = get_chapters_list(main_url=main_url,
-                                         manga_name_url=manga_name_url,
-                                         manga_name=manga_name,
-                                         reverse_sorted=False)
+    new_chapter_list = get_chapter_list(main_url=main_url,
+                                        manga_name_url=manga_name_url,
+                                        manga_name=manga_name,
+                                        reverse_sorted=False)
 
     # And then, read the current database.
     last_chapter = chapters_csv_to_list(m_name_ext)[-1]

@@ -40,9 +40,9 @@ def del_multiple_chars(text, chars):
     return text
 
 
-def get_chapters_list(manga_url,
-                      manga_name,
-                      sort_list=True):
+def get_chapter_list(manga_url,
+                     manga_name,
+                     sort_list=True):
     """
     Retrieves chapter urls and names. Returns a list of lists
     containing the url and the title of the chapter.
@@ -90,7 +90,7 @@ def get_chapter_image_list(chapter_data):
     Gets the links for each image in the chapter,
         and returns a list of the image urls and its file name.
     chapter_data: a list containing a url and a title.
-    NOTE: Not for direct use with the result of 'get_chapters_list'
+    NOTE: Not for direct use with the result of 'get_chapter_list'
     """
     # Get the data from the html and parse it.
     page = requests.get(chapter_data[0])
