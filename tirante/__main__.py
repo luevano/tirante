@@ -35,5 +35,4 @@ DATABASE_DIR = 'test_data'
 if __name__ == "__main__":
     download_manga(MANGA_NAME,
                    MANGA_DIR,
-                   DATABASE_DIR,
-                   'zip')
+                   DATABASE_DIR)
