@@ -25,6 +25,19 @@ from bs4 import BeautifulSoup
 import re
 
 
+def del_multiple_chars(text, chars):
+    """
+    Deletes multiple characters in a text and returns the 'fixed' text.
+    text: initial text.
+    chars: string of chars to delete.
+    """
+    for c in chars:
+        if c in text:
+            text = text.replace(c, '')
+
+    return text
+
+
 def get_chapters_list(manga_url,
                       manga_name,
                       sort_list=True):
@@ -54,18 +67,13 @@ def get_chapters_list(manga_url,
         # unwanted characters and then gets everyword.
         title = re.sub('Vol.\d ', '', row['title'])
         title = re.sub('Vol.\d\d ', '', row['title'])
-        title = '_'.join(title.replace(manga_name, '').replace('?', '')
-                         .replace(':', '').replace('-', '').replace('...', '')
-                         .replace(',', '').lower().split())
+        title = del_multiple_chars(title, '?:-,\'').replace('...', '')
+        title = title.replace(manga_name, '').replace('Chapter ', '')
+        title = '_'.join(title.lower().split())
 
-        print(href, title)
         chapter_list.append([href, title])
 
     if sort_list:
         return chapter_list[::-1]
     else:
         return chapter_list
-
-
-get_chapters_list('https://manganelo.com/manga/kimetsu_no_yaiba/',
-                  'Kimetsu no Yaiba')
