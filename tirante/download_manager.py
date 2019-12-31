@@ -23,8 +23,7 @@ SOFTWARE.
 import requests
 
 
-def download_image(image,
-                   save_img=True):
+def download_image(image):
     """
     Downloads an image from the specified url,
         and saves it with the specified name.
@@ -34,13 +33,10 @@ def download_image(image,
     # Gets the content of an image from its url.
     img_data = requests.get(image[0]).content
 
-    if save_img:
-        # Opens a file with its corresponding name as 'wb' (write, binary),
-        # and then, writes the img_data.
-        with open(image[1], 'wb') as handler:
-            handler.write(img_data)
-    else:
-        return img_data
+    # Opens a file with its corresponding name as 'wb' (write, binary),
+    # and then, writes the img_data.
+    with open(image[1], 'wb') as handler:
+        handler.write(img_data)
 
 
 def download_chapter(image_list,
