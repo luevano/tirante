@@ -22,7 +22,8 @@ SOFTWARE.
 """
 # from tirante.create_database import create_database
 # from tirante.update_database import update_database
-from tirante.download_manga import download_manga
+# from tirante.download_manga import download_manga
+from tirante.cbx_manager import zip_manga
 
 MANGA_URL = 'https://manganelo.com/manga/kimetsu_no_yaiba/'
 MANGA_NAME = 'Kimetsu no Yaiba'
@@ -33,6 +34,4 @@ MANGA_DIR = 'E:\\Mangas\\'
 DATABASE_DIR = 'test_data'
 
 if __name__ == "__main__":
-    download_manga(MANGA_NAME,
-                   MANGA_DIR,
-                   DATABASE_DIR)
+    zip_manga('E:\\Mangas\\Kimetsu no Yaiba\\')
