@@ -73,11 +73,30 @@ def get_chapter_list(manga_url,
         title = row['title'].lower()
         title = re.sub('vol.\d ', '', title)
         title = re.sub('vol.\d\d ', '', title)
-        title = del_multiple_chars(title, '?:-,\'').replace('...', '')
+        title = del_multiple_chars(title, '?:-_,\'').replace('...', '')
         title = title.replace(manga_name, '').replace('chapter', '')
         title = '_'.join(title.split())
 
-        chapter_list.append([href, title])
+        # Does sorcery to add zeros at the beginning of the name.
+        if '_' in title:
+            chapter_name = title.split('_')
+            if '.' in chapter_name[0]:
+                temp_name = chapter_name[0].split('.')
+                temp_name[0] = temp_name[0].zfill(4)
+                chapter_name[0] = '.'.join(temp_name)
+            else:
+                chapter_name[0] = chapter_name[0].zfill(4)
+            chapter_name = '_'.join(chapter_name)
+        else:
+            chapter_name = title
+            if '.' in chapter_name:
+                temp_name = chapter_name.split('.')
+                temp_name[0] = temp_name[0].zfill(4)
+                chapter_name = '.'.join(temp_name)
+            else:
+                chapter_name = chapter_name.zfill(4)
+
+        chapter_list.append([href, chapter_name])
 
     if sort_list:
         return chapter_list[::-1]
@@ -108,7 +127,12 @@ def get_chapter_image_list(chapter_data):
     for img in soup_img:
         # Gets the sring of the url, splits it by the char '/',
         # and gets the last item, which is the name of the file.
+        original_img_name = img['src'].split('/')[-1]
+        # Then, does sorcery to add zeros at the beginning of the name.
+        img_name = original_img_name.split('.')
+        img_name[0] = img_name[0].zfill(3)
+        img_name = '.'.join(img_name)
 
-        image_url_list.append([img['src'], img['src'].split('/')[-1]])
+        image_url_list.append([img['src'], img_name])
 
     return image_url_list

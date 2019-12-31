@@ -56,16 +56,14 @@ def zip_chapter(chapter_name,
     # Naming for the zip file, just a combination of
     # the chapter name and the extension.
     zf_name = '.'.join([chapter_name, 'cbz'])
-    with zf.ZipFile(zf_name, 'w', zf.ZIP_DEFLATED, False) as zip_file:
+    with zf.ZipFile(zf_name, 'w', zf.ZIP_DEFLATED, False, 9) as zip_file:
         # Change to the chapter folder and
         # get a list of all image files.
         os.chdir(chapter_name)
         image_list = sort_numerically(os.listdir(), 'ch_img')
         os.chdir('..')
         for image in image_list:
-            zip_file.write('\\'.join([chapter_name, image]),
-                           None,
-                           zf.ZIP_DEFLATED)
+            zip_file.write('\\'.join([chapter_name, image]))
 
 
 def zip_manga(manga_dir,
@@ -78,7 +76,8 @@ def zip_manga(manga_dir,
     os.chdir(manga_dir)
     chapter_list = sort_numerically(os.listdir(), 'ch_name')
 
-    for chapter in chapter_list:
-        if '.'.join([chapter, 'cbz']) not in chapter_list:
-            if chapter.split('.')[-1] != 'cbz':
-                zip_chapter(chapter, save_dir)
+    # zip_chapter(chapter_list[0], save_dir)
+
+    # for chapter in chapter_list:
+    #     if '.'.join([chapter, 'cbz']) not in chapter_list:
+    #         if chapter.split('.')[-1] != 'cbz':
