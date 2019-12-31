@@ -24,10 +24,12 @@ from tirante.version import __version__
 from tirante.create_database import create_database
 from tirante.update_database import update_database
 from tirante.download_manga import download_manga
+from tirante.cbz_manager import zip_manga
 
 # If somebody does "from package import *", this is what they will
 # be able to access:
 __all__ = ['__version__',
            'create_database',
            'update_database',
-           'download_manga']
+           'download_manga',
+           'zip_manga']
