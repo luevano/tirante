@@ -73,8 +73,9 @@ def get_chapter_list(manga_url,
         title = row['title'].lower()
         title = re.sub('vol.\d ', '', title)
         title = re.sub('vol.\d\d ', '', title)
-        title = del_multiple_chars(title, '?:-_,\'').replace('...', '')
+        title = del_multiple_chars(title, '?:-_,\'!%’').replace('...', '')
         title = title.replace(manga_name, '').replace('chapter', '')
+        title = title.replace('manga', '').replace('vol.tbd', '')
         title = '_'.join(title.split())
 
         # Does sorcery to add zeros at the beginning of the name.

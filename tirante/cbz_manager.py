@@ -31,7 +31,8 @@ import zipfile as zf
 # I only had corrupt files because I was missing the sorting part.
 
 # And thanks to https://stackoverflow.com/a/6743512 for this pieces of code.
-# Although I don't need it anymore since I solved the problem from the source.
+# Although I don't need it anymore since I solved
+# the problem from the source (that being the sorting).
 def sort_numerically(list, key='ch_img'):
     """
     Sorts files numerically instead of alphabetically.
