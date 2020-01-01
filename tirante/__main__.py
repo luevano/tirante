@@ -21,9 +21,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 # from tirante.create_database import create_database
-from tirante.update_database import update_database
+# from tirante.update_database import update_database
 # from tirante.download_manga import download_manga
-# from tirante.cbz_manager import zip_manga
+from tirante.cbz_manager import zip_manga
 
 MANGA_URL = 'https://manganelo.com/manga/kimetsu_no_yaiba/'
 MANGA_NAME = 'Kimetsu no Yaiba'
@@ -34,4 +34,4 @@ MANGA_DIR = 'E:\\Mangas\\'
 DATABASE_DIR = 'test_data'
 
 if __name__ == "__main__":
-    update_database(MANGA_URL, MANGA_NAME, DATABASE_DIR)
+    zip_manga('E:\\Mangas\\Kimetsu no Yaiba\\')

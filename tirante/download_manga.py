@@ -27,13 +27,15 @@ from tirante.download_manager import download_chapter
 
 def download_manga(manga_name,
                    manga_dir,
-                   database_dir):
+                   database_dir,
+                   extra_status_msgs=False):
     """
     Downloads a whole manga, saving it to subfolders.
         Uses the database already created.
     manga_name: name of the manga.
     manga_dir: manga download directory.
     database_dir: directory where the database is stored.
+    extra_status_msgs: if each image status should be printed.
     NOTE: This updates the manga, downloading the missing chapters
         if they're listed in the database.
     """
@@ -101,7 +103,7 @@ def download_manga(manga_name,
             os.chdir(chapter_name)
 
             # Download all the chapter images on its respective folder.
-            download_chapter(chapter_image_list)
+            download_chapter(chapter_image_list, extra_status_msgs)
 
             # Go back one folder to repeat the process
             # for the next chapter.

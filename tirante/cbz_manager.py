@@ -31,6 +31,7 @@ import zipfile as zf
 # I only had corrupt files because I was missing the sorting part.
 
 # And thanks to https://stackoverflow.com/a/6743512 for this pieces of code.
+# Although I don't need it anymore since I solved the problem from the source.
 def sort_numerically(list, key='ch_img'):
     """
     Sorts files numerically instead of alphabetically.
@@ -46,12 +47,10 @@ def sort_numerically(list, key='ch_img'):
         raise NameError('Invalid key-name.')
 
 
-def zip_chapter(chapter_name,
-                save_dir=None):
+def zip_chapter(chapter_name):
     """
     Zips a chapter into the desired extension.
     chapter_name: name of the chapter. This is also the folder name.
-    save_dir: where to save the compressed manga.
     """
     # Naming for the zip file, just a combination of
     # the chapter name and the extension.
@@ -60,24 +59,22 @@ def zip_chapter(chapter_name,
         # Change to the chapter folder and
         # get a list of all image files.
         os.chdir(chapter_name)
-        image_list = sort_numerically(os.listdir(), 'ch_img')
+        image_list = os.listdir()
         os.chdir('..')
         for image in image_list:
             zip_file.write('\\'.join([chapter_name, image]))
 
 
-def zip_manga(manga_dir,
-              save_dir=None):
+def zip_manga(manga_dir):
     """
     Zips a whole manga.
     manga_dir: directory where the manga is stored.
     save_dir: where to save the compressed manga.
     """
     os.chdir(manga_dir)
-    chapter_list = sort_numerically(os.listdir(), 'ch_name')
+    chapter_list = os.listdir()
 
-    # zip_chapter(chapter_list[0], save_dir)
-
-    # for chapter in chapter_list:
-    #     if '.'.join([chapter, 'cbz']) not in chapter_list:
-    #         if chapter.split('.')[-1] != 'cbz':
+    for chapter in chapter_list:
+        if '.'.join([chapter, 'cbz']) not in chapter_list:
+            if chapter.split('.')[-1] != 'cbz':
+                zip_chapter(chapter)
