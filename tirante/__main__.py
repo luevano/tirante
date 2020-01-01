@@ -20,13 +20,16 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
-# from tirante.create_database import create_database
+from tirante.create_database import create_database
 # from tirante.update_database import update_database
-# from tirante.download_manga import download_manga
+from tirante.download_manga import download_manga
 from tirante.cbz_manager import zip_manga
 
-MANGA_URL = 'https://manganelo.com/manga/kimetsu_no_yaiba/'
-MANGA_NAME = 'Kimetsu no Yaiba'
+# MANGA_URL = 'https://manganelo.com/manga/kimetsu_no_yaiba/'
+MANGA_URL = 'https://manganelo.com/manga/read_boku_no_hero_academia_manga/'
+
+# MANGA_NAME = 'Kimetsu no Yaiba'
+MANGA_NAME = 'Boku No Hero Academia'
 
 # PC main file location.
 MANGA_DIR = 'E:\\Mangas\\'
@@ -34,4 +37,6 @@ MANGA_DIR = 'E:\\Mangas\\'
 DATABASE_DIR = 'test_data'
 
 if __name__ == "__main__":
-    zip_manga('E:\\Mangas\\Kimetsu no Yaiba\\')
+    create_database(MANGA_URL, MANGA_NAME, DATABASE_DIR)
+    download_manga(MANGA_NAME, MANGA_DIR, DATABASE_DIR)
+    zip_manga('E:\\Mangas\\Boku No Hero Academia')
