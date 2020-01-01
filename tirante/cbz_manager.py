@@ -63,7 +63,10 @@ def zip_chapter(chapter_name):
         image_list = os.listdir()
         os.chdir('..')
         for image in image_list:
-            zip_file.write('\\'.join([chapter_name, image]))
+            zip_file.write('\\'.join([chapter_name, image]),
+                           None,
+                           zf.ZIP_DEFLATED,
+                           9)
 
 
 def zip_manga(manga_dir):
